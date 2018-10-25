@@ -1,6 +1,8 @@
 # coding: utf-8
 import re
 import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
 
 BSCList = ['BSC59-0', 'BSC60-D', 'BSC60-E', 'BSC60-F', 'BSC69-C', 'BSC69-D', 'BSC69-E', 'BSC77-4',
            'BSC77-5', 'BSC82-C', 'BSC82-D', 'BSC82-E', 'BSC82-F', 'BSC83-0', 'BSC83-1', 'BSC83-2',
@@ -71,3 +73,14 @@ df_all = pd.DataFrame([fi_bsc_list, se_unit_list, fi_datetime_list, th_NR_list, 
 df = df_all.T
 with open('all_alarm.csv', 'w') as f:
     df.to_csv(f, sep=',', index=False, header=None)
+time_list = []
+for l in df[2]:
+    time_list.append(int(l.split(' ')[-1][:2]))
+ti_al = pd.DataFrame(np.zeros((24, 1), int), index=[i for i in range(0, 24)])
+for ti in range(0, 24):
+    for d in time_list:
+        if ti == d:
+            ti_al[0][d] += 1
+print(ti_al)
+ti_al.plot(kind='bar')
+plt.show()
