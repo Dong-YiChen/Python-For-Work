@@ -7,7 +7,7 @@ from tkinter.messagebox import *
 from PIL import Image, ImageTk
 import os
 
-login = {'NokiaBSC': ['10.221.127.254', 22, 'nokia', 'NO8*a9t6']}
+login = {'NokiaBSC': ['ip', 22, 'username', 'password']}
 CmdList = []
 waittime = 0.5
 BSCList = ['BSC59-0', 'BSC60-D', 'BSC60-E', 'BSC60-F', 'BSC69-C', 'BSC69-D', 'BSC69-E', 'BSC77-4',
@@ -78,8 +78,8 @@ def bsccmd(CmdList, BSCList):
         for bsc in BSCList:
             outputfile = open(sys.path[0] + '\\BSC批量执行log\\' + bsc + '.txt', 'w')
             sendcmd(bsc, b'ENTER USERNAME < \x08 ', ssh_shell, outputfile)
-            sendcmd('SYSTEM', b'ENTER PASSWORD < \x08 ', ssh_shell, outputfile)
-            sendcmd('sbwh@19F', CommonRecv, ssh_shell, outputfile)
+            sendcmd('BSCusername', b'ENTER PASSWORD < \x08 ', ssh_shell, outputfile)
+            sendcmd('BSCpassword', CommonRecv, ssh_shell, outputfile)
             for cmd in CmdList:
                 sendcmd(cmd, CommonRecv, ssh_shell, outputfile)
             # sendcmd('ZUSI:COMP;', CommonRecv)
